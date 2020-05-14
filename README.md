@@ -1,7 +1,7 @@
 # shellscripts
 CI voor armoedzaaiers. (uitgaande dat je docker-compose gebruikt i.c.m. GCP voor je container registry en GKE)
 
-### Deploy
+### deploy.sh
 Om makkelijker een nieuwe versie naar GCP te kunnen sturen gebruiken we een script. Dit script zorgt dat
 1. de container wordt gemaakt (indien nodig)
 1. de container naar GCP wodt gekopieerd
@@ -21,3 +21,7 @@ En dat zou genoeg moeten zijn. Om het script uit te voeren ga je naar de directo
 Het script zoekt eerst in je docker-compose.yml naar de regel:  
 `x-deployment: naam-van-deployment`  
 Waar 'naam-van-deployment' de deployment naam is van je workload in GKE. Vervolgens zal een build worden gedaan als je dat wilt (er komt een vraag hiervoor) en zal de container naar de Registry worden gepushed. Tenslotte wordt de deployment ge-update. That's it.
+
+Het is ook mogelijk om meerdere "docker-compose.yml" bestanden te gebruiken, bijvoorbeeld 1 voor test en 1 voor release. In dat geval geef je de release versie de naam "docker-compose-release.yml". Om deze specifieke versie aan te roepen gebruik je dan:  
+`deploy release`  
+Denk er wel aan om dan de regel `x-deployment: naam-van-deployment` in je YML bestand juist aan te passen zodat de niet "release" versie naar een dvelopment deployment verwijst en de "release" versie van de YML naar de productie deployment.
